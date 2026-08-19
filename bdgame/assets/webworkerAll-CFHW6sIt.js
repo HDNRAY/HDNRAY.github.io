@@ -1,0 +1,1 @@
+import"./BattlePanel-BodZzjey.js";import"./init-BluobesD.js";
