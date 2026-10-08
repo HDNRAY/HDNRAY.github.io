@@ -1,0 +1,1 @@
+import{t as e}from"./vendor-react-CCIEwYL0.js";var t=e();function n({variant:e=`default`,size:n=`md`,className:r=``,children:i,...a}){return(0,t.jsx)(`button`,{className:`btn btn-${e} btn-${n}${r?` ${r}`:``}`,...a,children:i})}export{n as t};
