@@ -3,218 +3,1626 @@
     <head>
         <meta charset="utf-8" />
         <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-        <title>Ray's Workspace</title>
+        <title>张瑞 · 资深前端技术专家</title>
+        <meta
+            name="description"
+            content="张瑞 — 资深前端技术专家，12 年全栈开发经验，6 年团队管理经验。IBM / PWC / 长江信达 / 火币合约平台。React、Angular、TypeScript、微前端、AI Agent 开发。"
+        />
+        <meta name="author" content="张瑞" />
+        <meta name="theme-color" content="#0f1117" />
+        <meta property="og:type" content="profile" />
+        <meta property="og:title" content="张瑞 · 资深前端技术专家" />
+        <meta
+            property="og:description"
+            content="12 年全栈开发 · 6 年团队管理 · 深度使用 AI 模型与 Agent 开发"
+        />
+        <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>⚡️</text></svg>" />
         <style>
+            /* ============================================================
+               Design tokens
+               浅色为基准，深色为偏好；主色靛蓝 → 青渐变点缀
+               ============================================================ */
+            :root {
+                --bg: #f7f8fb;
+                --surface: #ffffff;
+                --surface-hover: #ffffff;
+                --border: #e6e8ef;
+                --border-strong: #cfd3df;
+                --text: #12141c;
+                --muted: #6b7180;
+                --accent: #4f46e5;
+                --accent-2: #06b6d4;
+                --radius: 14px;
+                --maxw: 880px;
+                --shadow: 0 1px 2px rgba(16, 20, 32, 0.04);
+                --shadow-hover: 0 12px 32px -12px rgba(16, 20, 32, 0.18);
+            }
+
+            @media (prefers-color-scheme: dark) {
+                :root {
+                    --bg: #0f1117;
+                    --surface: #161922;
+                    --surface-hover: #1b1f2b;
+                    --border: #262b37;
+                    --border-strong: #39404f;
+                    --text: #e8eaf2;
+                    --muted: #949baf;
+                    --accent: #818cf8;
+                    --accent-2: #22d3ee;
+                    --shadow: 0 1px 2px rgba(0, 0, 0, 0.4);
+                    --shadow-hover: 0 14px 36px -14px rgba(0, 0, 0, 0.7);
+                }
+            }
+
             * {
                 margin: 0;
                 padding: 0;
                 box-sizing: border-box;
             }
+
+            html {
+                scroll-behavior: smooth;
+                -webkit-text-size-adjust: 100%;
+                overflow-x: clip;
+            }
+
             body {
-                font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
-                background: #0f0f1a;
-                color: #e0e0e0;
-                min-height: 100vh;
+                font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'PingFang SC',
+                    'Hiragino Sans GB', 'Microsoft YaHei', Roboto, sans-serif;
+                background: var(--bg);
+                color: var(--text);
+                line-height: 1.7;
+                font-size: 16px;
+                -webkit-font-smoothing: antialiased;
+                overflow-x: hidden;
+            }
+
+            a {
+                color: inherit;
+                text-decoration: none;
+            }
+
+            ::selection {
+                background: color-mix(in srgb, var(--accent) 28%, transparent);
+            }
+
+            /* ============================================================
+               Layout
+               ============================================================ */
+            .wrap {
+                width: 100%;
+                max-width: var(--maxw);
+                margin: 0 auto;
+                padding: 0 24px;
+            }
+
+            section {
+                padding: 84px 0;
+                scroll-margin-top: 76px;
+            }
+
+            .section-head {
+                margin-bottom: 34px;
+            }
+
+            .section-kicker {
+                font-size: 12px;
+                font-weight: 600;
+                letter-spacing: 0.16em;
+                text-transform: uppercase;
+                color: var(--accent);
+                margin-bottom: 8px;
+            }
+
+            h2 {
+                font-size: 26px;
+                font-weight: 700;
+                letter-spacing: -0.01em;
+            }
+
+            h2 .rule {
+                display: block;
+                width: 38px;
+                height: 3px;
+                margin-top: 14px;
+                border-radius: 2px;
+                background: linear-gradient(90deg, var(--accent), var(--accent-2));
+            }
+
+            .lead {
+                color: var(--muted);
+                font-size: 15px;
+            }
+
+            /* ============================================================
+               Top navigation — 纯 CSS 悬停下划线自绘
+               ============================================================ */
+            .topnav {
+                position: fixed;
+                top: 0;
+                left: 0;
+                right: 0;
+                z-index: 50;
+                height: 58px;
+                display: flex;
+                align-items: center;
+                background: color-mix(in srgb, var(--bg) 82%, transparent);
+                backdrop-filter: saturate(180%) blur(14px);
+                -webkit-backdrop-filter: saturate(180%) blur(14px);
+                border-bottom: 1px solid var(--border);
+            }
+
+            .topnav .wrap {
+                display: flex;
+                align-items: center;
+                justify-content: space-between;
+                gap: 16px;
+            }
+
+            .brand {
+                display: flex;
+                align-items: center;
+                gap: 9px;
+                font-weight: 700;
+                font-size: 15px;
+                letter-spacing: -0.01em;
+                white-space: nowrap;
+            }
+
+            .brand-dot {
+                width: 9px;
+                height: 9px;
+                border-radius: 50%;
+                background: linear-gradient(135deg, var(--accent), var(--accent-2));
+                animation: pulse 2.6s ease-in-out infinite;
+            }
+
+            @keyframes pulse {
+                0%,
+                100% {
+                    box-shadow: 0 0 0 0 color-mix(in srgb, var(--accent) 55%, transparent);
+                }
+                70% {
+                    box-shadow: 0 0 0 8px transparent;
+                }
+            }
+
+            .navlinks {
+                display: flex;
+                gap: 4px;
+                overflow-x: auto;
+                scrollbar-width: none;
+            }
+
+            .navlinks::-webkit-scrollbar {
+                display: none;
+            }
+
+            .navlinks a {
+                position: relative;
+                padding: 6px 10px;
+                font-size: 14px;
+                color: var(--muted);
+                white-space: nowrap;
+                transition: color 0.22s ease;
+            }
+
+            .navlinks a::after {
+                content: '';
+                position: absolute;
+                left: 10px;
+                right: 10px;
+                bottom: 2px;
+                height: 2px;
+                border-radius: 2px;
+                background: linear-gradient(90deg, var(--accent), var(--accent-2));
+                transform: scaleX(0);
+                transform-origin: left;
+                transition: transform 0.28s cubic-bezier(0.22, 1, 0.36, 1);
+            }
+
+            .navlinks a:hover {
+                color: var(--text);
+            }
+
+            .navlinks a:hover::after {
+                transform: scaleX(1);
+            }
+
+            /* ============================================================
+               Hero — 柔光渐变缓慢漂移
+               ============================================================ */
+            .hero {
+                position: relative;
+                padding: 148px 0 96px;
+                overflow: hidden;
+            }
+
+            .hero-glow {
+                position: absolute;
+                inset: -20% -10% auto -10%;
+                height: 620px;
+                pointer-events: none;
+                z-index: 0;
+                filter: blur(70px);
+                opacity: 0.5;
+                background:
+                    radial-gradient(
+                        38% 42% at 22% 32%,
+                        color-mix(in srgb, var(--accent) 60%, transparent),
+                        transparent 70%
+                    ),
+                    radial-gradient(
+                        32% 38% at 76% 26%,
+                        color-mix(in srgb, var(--accent-2) 52%, transparent),
+                        transparent 70%
+                    ),
+                    radial-gradient(
+                        30% 34% at 52% 66%,
+                        color-mix(in srgb, #f472b6 42%, transparent),
+                        transparent 70%
+                    );
+                animation: drift 20s ease-in-out infinite alternate;
+            }
+
+            @keyframes drift {
+                0% {
+                    transform: translate3d(-2%, -1%, 0) scale(1);
+                }
+                50% {
+                    transform: translate3d(3%, 2%, 0) scale(1.08);
+                }
+                100% {
+                    transform: translate3d(-1%, 3%, 0) scale(1.02);
+                }
+            }
+
+            .hero .wrap {
+                position: relative;
+                z-index: 1;
+            }
+
+            .hero-eyebrow {
+                display: inline-flex;
+                flex-wrap: wrap;
+                align-items: center;
+                justify-content: center;
+                gap: 8px;
+                padding: 6px 14px;
+                border: 1px solid var(--border-strong);
+                border-radius: 999px;
+                font-size: 13px;
+                color: var(--muted);
+                background: color-mix(in srgb, var(--surface) 70%, transparent);
+                margin-bottom: 22px;
+                max-width: 100%;
+            }
+
+            .hero-eyebrow .live {
+                width: 7px;
+                height: 7px;
+                border-radius: 50%;
+                background: #22c55e;
+                animation: pulse 2.6s ease-in-out infinite;
+            }
+
+            .hero-eyebrow .dot-sep {
+                width: 1px;
+                height: 13px;
+                background: color-mix(in srgb, var(--text) 18%, transparent);
+                flex: none;
+            }
+
+            /* 芝麻：渐变小圆点 + 呼吸光晕 */
+            .hero-eyebrow .studio-ico {
+                position: relative;
+                width: 9px;
+                height: 9px;
+                border-radius: 50%;
+                flex: none;
+                background: linear-gradient(135deg, var(--accent), var(--accent-2));
+                animation: pulse 2.6s ease-in-out infinite;
+            }
+
+            .hero-eyebrow .studio-ico::after {
+                content: '';
+                position: absolute;
+                inset: -3px;
+                border-radius: 50%;
+                border: 1px solid color-mix(in srgb, var(--accent) 45%, transparent);
+                animation: halo 2.6s ease-out infinite;
+            }
+
+            @keyframes halo {
+                0% {
+                    transform: scale(0.7);
+                    opacity: 0.9;
+                }
+                100% {
+                    transform: scale(1.9);
+                    opacity: 0;
+                }
+            }
+
+            .hero h1 {
+                font-size: clamp(40px, 8.5vw, 66px);
+                font-weight: 800;
+                line-height: 1.1;
+                letter-spacing: -0.03em;
+                margin-bottom: 16px;
+            }
+
+            .grad {
+                background: linear-gradient(100deg, var(--accent), var(--accent-2) 55%, #f472b6);
+                background-size: 200% 100%;
+                -webkit-background-clip: text;
+                background-clip: text;
+                -webkit-text-fill-color: transparent;
+                animation: shift 8s ease-in-out infinite alternate;
+            }
+
+            @keyframes shift {
+                from {
+                    background-position: 0% 50%;
+                }
+                to {
+                    background-position: 100% 50%;
+                }
+            }
+
+            .hero-role {
+                font-size: clamp(17px, 2.6vw, 21px);
+                font-weight: 600;
+                color: var(--text);
+                margin-bottom: 14px;
+            }
+
+            .hero-role span {
+                color: var(--muted);
+                font-weight: 400;
+            }
+
+            .hero-desc {
+                max-width: 620px;
+                color: var(--muted);
+                font-size: 15.5px;
+                margin-bottom: 30px;
+            }
+
+            .hero-actions {
+                display: flex;
+                flex-wrap: wrap;
+                gap: 12px;
+            }
+
+            .btn {
+                display: inline-flex;
+                align-items: center;
+                gap: 8px;
+                padding: 10px 20px;
+                border-radius: 10px;
+                font-size: 14.5px;
+                font-weight: 600;
+                border: 1px solid transparent;
+                transition: transform 0.22s ease, box-shadow 0.22s ease, background 0.22s ease,
+                    border-color 0.22s ease;
+            }
+
+            .btn-primary {
+                color: #fff;
+                background: linear-gradient(120deg, var(--accent), var(--accent-2));
+                background-size: 160% 100%;
+                box-shadow: 0 8px 24px -10px color-mix(in srgb, var(--accent) 80%, transparent);
+            }
+
+            .btn-primary:hover {
+                background-position: 100% 50%;
+                transform: translateY(-2px);
+                box-shadow: 0 14px 30px -12px color-mix(in srgb, var(--accent) 90%, transparent);
+            }
+
+            .btn-ghost {
+                border-color: var(--border-strong);
+                color: var(--text);
+                background: color-mix(in srgb, var(--surface) 70%, transparent);
+            }
+
+            .btn-ghost:hover {
+                transform: translateY(-2px);
+                border-color: var(--accent);
+                box-shadow: var(--shadow-hover);
+            }
+
+            .scroll-hint {
+                display: flex;
+                justify-content: center;
+                margin-top: 62px;
+                color: var(--muted);
+            }
+
+            .scroll-hint svg {
+                width: 20px;
+                height: 20px;
+                animation: bob 2s ease-in-out infinite;
+            }
+
+            @keyframes bob {
+                0%,
+                100% {
+                    transform: translateY(-3px);
+                    opacity: 0.45;
+                }
+                50% {
+                    transform: translateY(3px);
+                    opacity: 1;
+                }
+            }
+
+            /* ============================================================
+               Cards & grids
+               ============================================================ */
+            .grid {
+                display: grid;
+                gap: 18px;
+            }
+
+            .grid-2 {
+                grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            }
+
+            .grid-stack {
+                grid-template-columns: repeat(auto-fit, minmax(190px, 1fr));
+            }
+
+            .card {
+                background: var(--surface);
+                border: 1px solid var(--border);
+                border-radius: var(--radius);
+                padding: 22px;
+                box-shadow: var(--shadow);
+                transition: transform 0.26s cubic-bezier(0.22, 1, 0.36, 1),
+                    border-color 0.26s ease, box-shadow 0.26s ease, background 0.26s ease;
+            }
+
+            .card:hover {
+                transform: translateY(-3px);
+                border-color: color-mix(in srgb, var(--accent) 45%, var(--border));
+                box-shadow: var(--shadow-hover);
+                background: var(--surface-hover);
+            }
+
+            .card h3 {
+                font-size: 15px;
+                font-weight: 700;
+                margin-bottom: 10px;
+                display: flex;
+                align-items: center;
+                gap: 8px;
+            }
+
+            .card h3::before {
+                content: '';
+                width: 3px;
+                height: 14px;
+                border-radius: 2px;
+                background: linear-gradient(180deg, var(--accent), var(--accent-2));
+                flex: none;
+            }
+
+            .card p {
+                font-size: 14.5px;
+                color: var(--muted);
+            }
+
+            /* About 优势列表 */
+            .adv {
+                list-style: none;
+                display: grid;
+                gap: 14px;
+            }
+
+            .adv li {
+                display: grid;
+                grid-template-columns: 20px 1fr;
+                gap: 12px;
+                font-size: 15px;
+                color: var(--muted);
+            }
+
+            .adv li b {
+                color: var(--text);
+                font-weight: 700;
+            }
+
+            .adv .tick {
+                width: 20px;
+                height: 20px;
+                margin-top: 4px;
+                border-radius: 50%;
+                background: color-mix(in srgb, var(--accent) 16%, transparent);
+                color: var(--accent);
+                display: grid;
+                place-items: center;
+                font-size: 11px;
+                font-weight: 700;
+            }
+
+            /* ============================================================
+               Education
+               ============================================================ */
+            .edu-list {
+                display: grid;
+                gap: 14px;
+            }
+
+            .edu {
+                display: grid;
+                grid-template-columns: 132px 1fr;
+                gap: 18px;
+                align-items: baseline;
+                padding: 20px 22px;
+                background: var(--surface);
+                border: 1px solid var(--border);
+                border-radius: var(--radius);
+                box-shadow: var(--shadow);
+                transition: transform 0.26s cubic-bezier(0.22, 1, 0.36, 1),
+                    border-color 0.26s ease, box-shadow 0.26s ease;
+            }
+
+            .edu:hover {
+                transform: translateY(-3px);
+                border-color: color-mix(in srgb, var(--accent) 45%, var(--border));
+                box-shadow: var(--shadow-hover);
+            }
+
+            .edu-years {
+                font-size: 13px;
+                font-weight: 600;
+                color: var(--accent);
+                font-variant-numeric: tabular-nums;
+                letter-spacing: 0.02em;
+            }
+
+            .edu-school {
+                font-size: 16.5px;
+                font-weight: 700;
+                letter-spacing: -0.01em;
+            }
+
+            .edu-major {
+                font-size: 14px;
+                color: var(--muted);
+            }
+
+            .edu-badge {
+                display: inline-block;
+                margin-left: 8px;
+                padding: 1px 8px;
+                border-radius: 999px;
+                font-size: 11.5px;
+                font-weight: 600;
+                vertical-align: 2px;
+                color: var(--accent);
+                background: color-mix(in srgb, var(--accent) 13%, transparent);
+            }
+
+            /* ============================================================
+               Work timeline — 渐变轴线 + 节点发光
+               ============================================================ */
+            .timeline {
+                position: relative;
+                padding-left: 30px;
+            }
+
+            .timeline::before {
+                content: '';
+                position: absolute;
+                left: 5px;
+                top: 10px;
+                bottom: 10px;
+                width: 2px;
+                border-radius: 2px;
+                background: linear-gradient(
+                    180deg,
+                    var(--accent),
+                    var(--accent-2) 45%,
+                    color-mix(in srgb, var(--border-strong) 60%, transparent)
+                );
+            }
+
+            .job {
+                position: relative;
+                padding: 0 0 34px 0;
+            }
+
+            .job:last-child {
+                padding-bottom: 0;
+            }
+
+            .job::before {
+                content: '';
+                position: absolute;
+                left: -30px;
+                top: 8px;
+                width: 12px;
+                height: 12px;
+                border-radius: 50%;
+                background: var(--bg);
+                border: 2px solid var(--accent);
+                transition: box-shadow 0.28s ease, transform 0.28s ease, background 0.28s ease;
+            }
+
+            .job:hover::before {
+                background: var(--accent);
+                transform: scale(1.18);
+                box-shadow: 0 0 0 5px color-mix(in srgb, var(--accent) 22%, transparent);
+            }
+
+            .job-top {
+                display: flex;
+                flex-wrap: wrap;
+                align-items: baseline;
+                gap: 10px;
+                margin-bottom: 3px;
+            }
+
+            .job-company {
+                font-size: 16.5px;
+                font-weight: 700;
+                letter-spacing: -0.01em;
+            }
+
+            .job-title {
+                font-size: 13px;
+                font-weight: 600;
+                color: var(--accent);
+                padding: 1px 9px;
+                border-radius: 999px;
+                background: color-mix(in srgb, var(--accent) 12%, transparent);
+            }
+
+            .job-year {
+                font-size: 13px;
+                color: var(--muted);
+                font-variant-numeric: tabular-nums;
+                margin-left: auto;
+                white-space: nowrap;
+            }
+
+            .job-desc {
+                font-size: 14.5px;
+                color: var(--muted);
+                margin-bottom: 10px;
+            }
+
+            .tags {
+                display: flex;
+                flex-wrap: wrap;
+                gap: 7px;
+            }
+
+            .tags span {
+                font-size: 12.5px;
+                padding: 2.5px 10px;
+                border-radius: 7px;
+                color: var(--muted);
+                background: color-mix(in srgb, var(--text) 6%, transparent);
+                border: 1px solid var(--border);
+                transition: color 0.22s ease, border-color 0.22s ease, transform 0.22s ease;
+            }
+
+            .tags span:hover {
+                color: var(--accent);
+                border-color: color-mix(in srgb, var(--accent) 45%, var(--border));
+                transform: translateY(-1px);
+            }
+
+            /* ============================================================
+               Certifications
+               ============================================================ */
+            .certs {
+                display: flex;
+                flex-wrap: wrap;
+                gap: 12px;
+                margin-top: 16px;
+            }
+
+            .cert {
+                display: inline-flex;
+                align-items: center;
+                gap: 9px;
+                padding: 9px 15px;
+                border-radius: 10px;
+                border: 1px solid var(--border);
+                background: var(--surface);
+                font-size: 13.5px;
+                font-weight: 600;
+                box-shadow: var(--shadow);
+                transition: transform 0.24s ease, border-color 0.24s ease, box-shadow 0.24s ease;
+            }
+
+            .cert:hover {
+                transform: translateY(-2px);
+                border-color: color-mix(in srgb, #f59e0b 55%, var(--border));
+                box-shadow: var(--shadow-hover);
+            }
+
+            .cert i {
+                font-style: normal;
+                font-size: 15px;
+            }
+
+            /* ============================================================
+               Projects — 悬停渐变下划线自绘展开
+               ============================================================ */
+            .project {
+                position: relative;
+                display: flex;
+                flex-direction: column;
+                overflow: hidden;
+                background: var(--surface);
+                border: 1px solid var(--border);
+                border-radius: var(--radius);
+                padding: 22px;
+                box-shadow: var(--shadow);
+                transition: transform 0.28s cubic-bezier(0.22, 1, 0.36, 1),
+                    border-color 0.28s ease, box-shadow 0.28s ease, background 0.28s ease;
+            }
+
+            .project::after {
+                content: '';
+                position: absolute;
+                left: 0;
+                right: 0;
+                bottom: 0;
+                height: 3px;
+                background: linear-gradient(90deg, var(--accent), var(--accent-2), #f472b6);
+                transform: scaleX(0);
+                transform-origin: left;
+                transition: transform 0.42s cubic-bezier(0.22, 1, 0.36, 1);
+            }
+
+            .project:hover {
+                transform: translateY(-4px);
+                border-color: color-mix(in srgb, var(--accent) 40%, var(--border));
+                box-shadow: var(--shadow-hover);
+                background: var(--surface-hover);
+            }
+
+            .project:hover::after {
+                transform: scaleX(1);
+            }
+
+            .project-name {
+                display: flex;
+                align-items: center;
+                gap: 8px;
+                font-size: 16px;
+                font-weight: 700;
+                letter-spacing: -0.01em;
+                margin-bottom: 6px;
+            }
+
+            .project-name .arrow {
+                font-size: 14px;
+                color: var(--muted);
+                transition: transform 0.28s cubic-bezier(0.22, 1, 0.36, 1), color 0.28s ease;
+            }
+
+            .project:hover .arrow {
+                transform: translateX(4px);
+                color: var(--accent);
+            }
+
+            .project-desc {
+                font-size: 14px;
+                color: var(--muted);
+                margin-bottom: 14px;
+            }
+
+            .project-path {
+                font-size: 12.5px;
+                font-family: ui-monospace, SFMono-Regular, Menlo, Consolas, monospace;
+                color: var(--muted);
+                margin-top: auto;
+                padding-top: 12px;
+            }
+
+            /* 小程序卡片 */
+            .mp-card {
                 display: flex;
                 flex-direction: column;
                 align-items: center;
-                padding: 60px 20px;
+                text-align: center;
+                gap: 4px;
             }
-            h1 {
-                font-size: 2rem;
-                font-weight: 600;
-                color: #ffffff;
-                margin-bottom: 8px;
-            }
-            .subtitle {
-                color: #888;
-                margin-bottom: 48px;
-                font-size: 0.95rem;
-            }
-            .grid {
-                display: grid;
-                grid-template-columns: repeat(auto-fill, minmax(220px, 1fr));
-                gap: 20px;
+
+            .mp-qr {
                 width: 100%;
-                max-width: 800px;
-            }
-            .card {
-                background: #1a1a2e;
-                border: 1px solid #2a2a4a;
+                max-width: 168px;
+                aspect-ratio: 1;
                 border-radius: 12px;
-                padding: 28px 24px;
-                text-decoration: none;
-                color: inherit;
-                transition: all 0.2s;
-                display: flex;
-                flex-direction: column;
-                gap: 6px;
-            }
-            .card:hover {
-                background: #22223a;
-                border-color: #4a4a8a;
-                transform: translateY(-2px);
-            }
-            .card-name {
-                font-size: 1.1rem;
-                font-weight: 600;
-                color: #fff;
-            }
-            .card-desc {
-                font-size: 0.85rem;
-                color: #999;
                 overflow: hidden;
-                text-overflow: ellipsis;
-                white-space: nowrap;
+                border: 1px solid var(--border);
+                background: #fff;
+                margin: 4px 0 16px;
+                transition: transform 0.32s cubic-bezier(0.22, 1, 0.36, 1),
+                    box-shadow 0.32s ease, border-color 0.32s ease;
             }
-            .loading {
-                color: #666;
-                font-size: 0.95rem;
-                grid-column: 1 / -1;
+
+            .mp-qr img {
+                width: 100%;
+                height: 100%;
+                display: block;
+                object-fit: cover;
+            }
+
+            .mp-card:hover .mp-qr {
+                transform: scale(1.04) rotate(-1.2deg);
+                border-color: color-mix(in srgb, var(--accent) 45%, var(--border));
+                box-shadow: var(--shadow-hover);
+            }
+
+            .mp-name {
+                font-size: 16.5px;
+                font-weight: 700;
+                letter-spacing: -0.01em;
+            }
+
+            .mp-desc {
+                font-size: 13.5px;
+                color: var(--muted);
+            }
+
+            .mp-hint {
+                margin-top: 12px;
+                font-size: 12px;
+                color: var(--muted);
+                opacity: 0.85;
+            }
+
+            .mp-tag {
+                display: inline-block;
+                margin-top: 8px;
+                font-size: 11.5px;
+                font-weight: 600;
+                letter-spacing: 0.04em;
+                color: #22c55e;
+                padding: 1px 9px;
+                border-radius: 999px;
+                background: color-mix(in srgb, #22c55e 13%, transparent);
+            }
+
+            /* ============================================================
+               Studio — 芝麻IT工作室
+               ============================================================ */
+            .studio {
+                position: relative;
+                overflow: hidden;
                 text-align: center;
-                padding: 40px 0;
+                padding: 54px 26px;
+                border: 1px solid var(--border);
+                border-radius: 18px;
+                background: var(--surface);
+                box-shadow: var(--shadow);
+                transition: transform 0.3s cubic-bezier(0.22, 1, 0.36, 1),
+                    border-color 0.3s ease, box-shadow 0.3s ease;
             }
-            .error-msg {
-                color: #aa5555;
-                grid-column: 1 / -1;
+
+            .studio:hover {
+                transform: translateY(-3px);
+                border-color: color-mix(in srgb, var(--accent) 40%, var(--border));
+                box-shadow: var(--shadow-hover);
+            }
+
+            .studio::before {
+                content: '';
+                position: absolute;
+                inset: -50% -25% auto -25%;
+                height: 340px;
+                filter: blur(64px);
+                opacity: 0.32;
+                background:
+                    radial-gradient(
+                        38% 50% at 32% 45%,
+                        color-mix(in srgb, var(--accent) 60%, transparent),
+                        transparent 70%
+                    ),
+                    radial-gradient(
+                        38% 50% at 70% 45%,
+                        color-mix(in srgb, var(--accent-2) 55%, transparent),
+                        transparent 70%
+                    );
+                animation: drift 22s ease-in-out infinite alternate;
+            }
+
+            .studio > * {
+                position: relative;
+            }
+
+            .studio-name {
+                font-size: clamp(30px, 6.4vw, 44px);
+                font-weight: 800;
+                letter-spacing: -0.03em;
+                line-height: 1.2;
+                margin: 10px 0 12px;
+            }
+
+            .studio-tag {
+                display: inline-flex;
+                align-items: center;
+                gap: 8px;
+                font-size: 12px;
+                font-weight: 600;
+                letter-spacing: 0.16em;
+                text-transform: uppercase;
+                color: var(--muted);
+            }
+
+            .studio-tag::before,
+            .studio-tag::after {
+                content: '';
+                width: 26px;
+                height: 1px;
+                background: color-mix(in srgb, var(--text) 20%, transparent);
+            }
+
+            .studio-desc {
+                max-width: 460px;
+                margin: 0 auto;
+                font-size: 15px;
+                color: var(--muted);
+            }
+
+            /* ============================================================
+               Contact & footer
+               ============================================================ */
+            .contact-card {
+                position: relative;
+                overflow: hidden;
                 text-align: center;
-                padding: 20px 0;
-                font-size: 0.9rem;
+                padding: 46px 26px;
+                border: 1px solid var(--border);
+                border-radius: 18px;
+                background: var(--surface);
+                box-shadow: var(--shadow);
             }
-            @media (prefers-color-scheme: light) {
+
+            .contact-card::before {
+                content: '';
+                position: absolute;
+                inset: -40% -20% auto -20%;
+                height: 320px;
+                filter: blur(60px);
+                opacity: 0.35;
+                background:
+                    radial-gradient(
+                        40% 50% at 30% 40%,
+                        color-mix(in srgb, var(--accent) 60%, transparent),
+                        transparent 70%
+                    ),
+                    radial-gradient(
+                        40% 50% at 72% 40%,
+                        color-mix(in srgb, var(--accent-2) 55%, transparent),
+                        transparent 70%
+                    );
+                animation: drift 24s ease-in-out infinite alternate;
+            }
+
+            .contact-card > * {
+                position: relative;
+            }
+
+            .contact-card h2 {
+                font-size: 24px;
+                margin-bottom: 10px;
+            }
+
+            .contact-card p {
+                color: var(--muted);
+                font-size: 15px;
+                margin-bottom: 26px;
+            }
+
+            .contact-actions {
+                display: flex;
+                flex-wrap: wrap;
+                gap: 12px;
+                justify-content: center;
+            }
+
+            footer {
+                border-top: 1px solid var(--border);
+                padding: 28px 0 40px;
+                text-align: center;
+                font-size: 13px;
+                color: var(--muted);
+            }
+
+            /* ============================================================
+               Scroll reveal — 元素默认可见，JS 就绪后才隐藏，避免白屏
+               ============================================================ */
+            html.js .reveal {
+                opacity: 0;
+                transform: translateY(18px);
+                transition: opacity 0.62s cubic-bezier(0.22, 1, 0.36, 1),
+                    transform 0.62s cubic-bezier(0.22, 1, 0.36, 1);
+            }
+
+            html.js .reveal.in {
+                opacity: 1;
+                transform: none;
+            }
+
+            /* stagger：同组卡片依次入场 */
+            html.js .reveal[data-delay='1'] {
+                transition-delay: 0.07s;
+            }
+            html.js .reveal[data-delay='2'] {
+                transition-delay: 0.14s;
+            }
+            html.js .reveal[data-delay='3'] {
+                transition-delay: 0.21s;
+            }
+            html.js .reveal[data-delay='4'] {
+                transition-delay: 0.28s;
+            }
+            html.js .reveal[data-delay='5'] {
+                transition-delay: 0.35s;
+            }
+
+            /* ============================================================
+               Responsive
+               ============================================================ */
+            @media (max-width: 720px) {
                 body {
-                    background: #f5f5fa;
-                    color: #333;
+                    font-size: 15.5px;
                 }
-                h1 {
-                    color: #111;
+                .wrap {
+                    padding: 0 18px;
                 }
-                .subtitle {
-                    color: #888;
+                section {
+                    padding: 62px 0;
                 }
-                .card {
-                    background: #fff;
-                    border-color: #ddd;
+                .hero {
+                    padding: 116px 0 72px;
                 }
-                .card:hover {
-                    background: #f0f0f8;
-                    border-color: #8888cc;
+                h2 {
+                    font-size: 22px;
                 }
-                .card-name {
-                    color: #222;
+                .hero h1 {
+                    font-size: clamp(34px, 11vw, 46px);
+                }
+                /* 窄屏下让身份标签左对齐换行，避免中间那条竖分隔线落在行尾 */
+                .hero-eyebrow {
+                    display: flex;
+                    flex-direction: column;
+                    align-items: flex-start;
+                    gap: 3px;
+                    padding: 10px 15px;
+                    border-radius: 14px;
+                    font-size: 12.5px;
+                }
+                .hero-eyebrow .dot-sep {
+                    display: none;
+                }
+                .edu {
+                    grid-template-columns: 1fr;
+                    gap: 4px;
+                    padding: 18px;
+                }
+                .job-year {
+                    margin-left: 0;
+                    width: 100%;
+                }
+                .timeline {
+                    padding-left: 24px;
+                }
+                .timeline::before {
+                    left: 4px;
+                }
+                .job::before {
+                    left: -24px;
+                    width: 10px;
+                    height: 10px;
+                }
+                /* 顶部导航：品牌收窄，链接可横向滚动且末端留出呼吸位 */
+                .topnav .brand span.brand-text {
+                    display: none;
+                }
+                .topnav .wrap {
+                    gap: 8px;
+                }
+                .navlinks {
+                    margin-right: -6px;
+                    padding-right: 6px;
+                    -webkit-overflow-scrolling: touch;
+                }
+                .navlinks a {
+                    padding: 6px 9px;
+                    font-size: 13.5px;
+                }
+                .contact-card {
+                    padding: 34px 20px;
+                }
+            }
+
+            /* ============================================================
+               Motion preferences
+               ============================================================ */
+            @media (prefers-reduced-motion: reduce) {
+                html {
+                    scroll-behavior: auto;
+                }
+                *,
+                *::before,
+                *::after {
+                    animation-duration: 0.001ms !important;
+                    animation-iteration-count: 1 !important;
+                    transition-duration: 0.001ms !important;
+                }
+                html.js .reveal {
+                    opacity: 1;
+                    transform: none;
                 }
             }
         </style>
+        <script>
+            // 先置位 js 标记，reveal 的初始隐藏态才生效（无 JS 时内容始终可见）
+            document.documentElement.classList.add('js');
+        </script>
     </head>
     <body>
-        <h1>Ray's Workspace</h1>
-        <p class="subtitle">Projects &amp; experiments</p>
-        <div class="grid" id="project-grid">
-            <div class="loading">🔍 Scanning for projects…</div>
-        </div>
+        <!-- ================= 顶部导航 ================= -->
+        <nav class="topnav">
+            <div class="wrap">
+                <a class="brand" href="#top">
+                    <span class="brand-dot"></span>
+                    <span class="brand-text">张瑞 · Ray</span>
+                </a>
+                <div class="navlinks">
+                    <a href="#about">关于</a>
+                    <a href="#education">教育</a>
+                    <a href="#work">经历</a>
+                    <a href="#stack">技术栈</a>
+                    <a href="#works">作品</a>
+                    <a href="#studio">工作室</a>
+                    <a href="#contact">联系</a>
+                </div>
+            </div>
+        </nav>
+
+        <!-- ================= Hero ================= -->
+        <header class="hero" id="top">
+            <div class="hero-glow"></div>
+            <div class="wrap">
+                <div class="hero-eyebrow">
+                    <span class="live"></span>
+                    技术负责人 @ 武汉翊辰互联
+                    <span class="dot-sep"></span>
+                    <span class="studio-ico" aria-hidden="true"></span>
+                    主理人 @ 芝麻IT工作室
+                </div>
+                <h1>你好，我是<span class="grad">张瑞</span></h1>
+                <p class="hero-role">
+                    资深前端技术专家 <span>· 12 年全栈开发 · 6 年团队管理</span>
+                </p>
+                <p class="hero-desc">
+                    从 IBM 到 PWC，从智慧城市国企项目到火币合约平台 —— 我做过架构、写过核心代码、
+                    带过团队。现在深度使用各类 AI 模型与 Agent 参与开发，也在经营自己的
+                    <strong>芝麻IT工作室</strong>，把效率这件事做到极致。
+                </p>
+                <div class="hero-actions">
+                    <a class="btn btn-primary" href="#works">查看作品 →</a>
+                    <a class="btn btn-ghost" href="mailto:110681032@qq.com">✉ 联系我</a>
+                </div>
+                <div class="scroll-hint" aria-hidden="true">
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                        <path d="M12 5v14M5 12l7 7 7-7" stroke-linecap="round" />
+                    </svg>
+                </div>
+            </div>
+        </header>
+
+        <!-- ================= 关于我 ================= -->
+        <section id="about">
+            <div class="wrap">
+                <div class="section-head reveal">
+                    <div class="section-kicker">About</div>
+                    <h2>关于我<span class="rule"></span></h2>
+                </div>
+                <ul class="adv reveal" data-delay="1">
+                    <li>
+                        <span class="tick">✓</span>
+                        <span
+                            ><b>技术深度</b> — 12 年全栈开发经验，精通 Web / TypeScript
+                            全技术栈与前端架构设计，熟悉前后端性能优化与安全审计，善于使用 AI Agent
+                            提高开发效率。</span
+                        >
+                    </li>
+                    <li>
+                        <span class="tick">✓</span>
+                        <span
+                            ><b>领导力</b> — 6 年技术团队管理经验，曾带领团队支撑千万级项目交付，
+                            擅长跨部门协作与敏捷项目管理。</span
+                        >
+                    </li>
+                    <li>
+                        <span class="tick">✓</span>
+                        <span
+                            ><b>国际化视野</b> — 4 年远程跨国协作经验，英语流利，深度参与国际项目
+                            技术方案设计与评审。</span
+                        >
+                    </li>
+                    <li>
+                        <span class="tick">✓</span>
+                        <span
+                            ><b>技术影响力</b> — 企业内训讲师 / 技术负责人，主导 React / Angular
+                            技术重构与最佳实践落地，引领 AI 开发潮流，持续学习与分享。</span
+                        >
+                    </li>
+                </ul>
+            </div>
+        </section>
+
+        <!-- ================= 教育背景 ================= -->
+        <section id="education">
+            <div class="wrap">
+                <div class="section-head reveal">
+                    <div class="section-kicker">Education</div>
+                    <h2>教育背景<span class="rule"></span></h2>
+                </div>
+                <div class="edu-list">
+                    <div class="edu reveal" data-delay="1">
+                        <div class="edu-years">2011 — 2013</div>
+                        <div>
+                            <div class="edu-school">
+                                莫纳什大学<span class="edu-badge">硕士</span>
+                            </div>
+                            <div class="edu-major">信息技术 · Master of Information Technology</div>
+                        </div>
+                    </div>
+                    <div class="edu reveal" data-delay="2">
+                        <div class="edu-years">2007 — 2011</div>
+                        <div>
+                            <div class="edu-school">
+                                武汉科技大学<span class="edu-badge">本科</span>
+                            </div>
+                            <div class="edu-major">电子信息工程 · 工学学士</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- ================= 工作经历 ================= -->
+        <section id="work">
+            <div class="wrap">
+                <div class="section-head reveal">
+                    <div class="section-kicker">Experience</div>
+                    <h2>工作经历<span class="rule"></span></h2>
+                    <p class="lead" style="margin-top: 14px">
+                        外企、国企、互联网、创业团队都待过；架构、管理、写代码都没放下。
+                    </p>
+                </div>
+
+                <div class="timeline">
+                    <div class="job reveal">
+                        <div class="job-top">
+                            <span class="job-company">武汉翊辰互联科技有限公司</span>
+                            <span class="job-title">技术负责人</span>
+                            <span class="job-year">2025.08 — 至今</span>
+                        </div>
+                        <p class="job-desc">
+                            负责 IOT 组态编辑器的架构与核心模块：图形绘制、自定义元件、规则引擎、交互事件。
+                            管理 7 人团队，把控需求与开发节奏；项目全程与 AI Agent 开发模式深度结合。
+                        </p>
+                        <div class="tags">
+                            <span>Vue3</span><span>TypeScript</span><span>Vite</span>
+                            <span>Konva</span><span>架构设计</span><span>AI Agent</span>
+                            <span>团队管理</span>
+                        </div>
+                    </div>
+
+                    <div class="job reveal">
+                        <div class="job-top">
+                            <span class="job-company">普华永道 PwC · 信息技术</span>
+                            <span class="job-title">高级技术专家（远程）</span>
+                            <span class="job-year">2021.05 — 2025.06</span>
+                        </div>
+                        <p class="job-desc">
+                            深度参与微前端架构迭代与核心模块性能优化；基于 React / Nest.js + MongoDB
+                            构建高可用系统，Jest 单元测试覆盖率达 80%，接入 Datadog 监控；
+                            主导跨国技术方案评审与跨团队协作。
+                        </p>
+                        <div class="tags">
+                            <span>React</span><span>Nest.js</span><span>MongoDB</span>
+                            <span>微前端</span><span>Monorepo / Nx</span><span>AgGrid</span>
+                            <span>Jest</span><span>Datadog</span>
+                        </div>
+                    </div>
+
+                    <div class="job reveal">
+                        <div class="job-top">
+                            <span class="job-company">长江信达软件技术（武汉）</span>
+                            <span class="job-title">前端组长</span>
+                            <span class="job-year">2019.04 — 2021.05</span>
+                        </div>
+                        <p class="job-desc">
+                            主导智慧城市项目前端工程重构（Angular 8+ → 12），大幅提升模块复用率，支撑
+                            千万级项目中标；设计与开发 OpenLayers / Cesium 二三维可切换地图引擎，
+                            服务公司 80% 项目；从零搭建并带领 5 人以上前端团队。
+                        </p>
+                        <div class="tags">
+                            <span>Angular</span><span>RxJS</span><span>ng-zorro</span>
+                            <span>OpenLayers</span><span>Cesium</span><span>ECharts</span>
+                            <span>数据大屏</span><span>敏捷 Scrum</span>
+                        </div>
+                    </div>
+
+                    <div class="job reveal">
+                        <div class="job-top">
+                            <span class="job-company">武汉量投网络科技有限公司</span>
+                            <span class="job-title">高级前端工程师</span>
+                            <span class="job-year">2018.04 — 2019.04</span>
+                        </div>
+                        <p class="job-desc">
+                            独立完成<strong>火币合约平台移动端</strong>开发，解决各类兼容性与性能问题；
+                            负责郑州商品交易所电子仓单系统（Angular 4+）核心功能重构与交付。
+                        </p>
+                        <div class="tags">
+                            <span>React</span><span>Angular</span><span>移动端 H5</span>
+                            <span>性能优化</span><span>金融 / 期货业务</span>
+                        </div>
+                    </div>
+
+                    <div class="job reveal">
+                        <div class="job-top">
+                            <span class="job-company">IBM 国际商业机器（中国）武汉</span>
+                            <span class="job-title">应用工程师</span>
+                            <span class="job-year">2014.07 — 2018.03</span>
+                        </div>
+                        <p class="job-desc">
+                            从应届生起步，全面学习并强化应用开发技能，横跨 iOS、Android、Node.js、
+                            Angular、MongoDB；作为先锋接触 iBeacon、OCR、NoSQL、Cordova / PhoneGap
+                            等新技术。
+                        </p>
+                        <div class="tags">
+                            <span>iOS / Objective-C</span><span>Swift</span><span>Android</span>
+                            <span>Node.js</span><span>Angular</span><span>MongoDB</span>
+                            <span>iBeacon</span><span>OCR</span><span>Cordova</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- ================= 技术栈 ================= -->
+        <section id="stack">
+            <div class="wrap">
+                <div class="section-head reveal">
+                    <div class="section-kicker">Stack</div>
+                    <h2>技术栈与能力<span class="rule"></span></h2>
+                </div>
+                <div class="grid grid-2">
+                    <div class="card reveal" data-delay="1">
+                        <h3>前端</h3>
+                        <div class="tags">
+                            <span>React</span><span>Angular</span><span>Vue3</span>
+                            <span>TypeScript / ES6</span><span>Scss / Less</span>
+                            <span>微前端 Federation</span><span>Single-SPA</span><span>WebGIS</span>
+                        </div>
+                    </div>
+                    <div class="card reveal" data-delay="2">
+                        <h3>后端</h3>
+                        <div class="tags">
+                            <span>Node.js</span><span>Nest.js</span><span>Express</span>
+                            <span>微服务</span><span>MongoDB</span><span>REST / 接口设计</span>
+                        </div>
+                    </div>
+                    <div class="card reveal" data-delay="3">
+                        <h3>工程化</h3>
+                        <div class="tags">
+                            <span>Webpack</span><span>Vite</span><span>Jest</span><span>Git</span>
+                            <span>Monorepo / Nx</span><span>CI 流程</span>
+                        </div>
+                    </div>
+                    <div class="card reveal" data-delay="4">
+                        <h3>运维 · 管理与协作</h3>
+                        <div class="tags">
+                            <span>AWS</span><span>Docker</span><span>Datadog</span>
+                            <span>Veracode</span><span>敏捷开发 Scrum</span>
+                            <span>跨文化团队协作</span><span>技术方案评审</span>
+                            <span>分支项目经理</span>
+                        </div>
+                    </div>
+                    <div class="card reveal" data-delay="5" style="grid-column: 1 / -1">
+                        <h3>AI 辅助开发</h3>
+                        <p>
+                            当前主力工作方式：日常结合各类大语言模型与编码 Agent
+                            完成需求拆解、架构设计、代码生成与审查、测试补全与疑难排查，
+                            并在团队内推广这套流程，持续提升交付效率。
+                        </p>
+                        <div class="tags" style="margin-top: 12px">
+                            <span>LLM 应用</span><span>Coding Agent</span>
+                            <span>Prompt / 上下文工程</span><span>AI 提效流程推广</span>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="certs reveal">
+                    <span class="cert"><i>🎖</i> AWS Certified Developer — Associate</span>
+                    <span class="cert"><i>🎖</i> AWS Certified Solution Architect — Associate</span>
+                </div>
+            </div>
+        </section>
+
+        <!-- ================= 作品 ================= -->
+        <section id="works">
+            <div class="wrap">
+                <div class="section-head reveal">
+                    <div class="section-kicker">Works</div>
+                    <h2>个人作品<span class="rule"></span></h2>
+                    <p class="lead" style="margin-top: 14px">
+                        都是自己从头写的：网页小游戏，加上两个微信小程序。
+                    </p>
+                </div>
+
+                <h3 style="font-size: 15px; font-weight: 700; margin: 0 0 16px" class="reveal">
+                    🌐 网页作品
+                </h3>
+                <div class="grid grid-2">
+                    <a class="project reveal" data-delay="1" href="bdgame/">
+                        <div class="project-name">
+                            2088 青山镇 斗炁大会 <span class="arrow">→</span>
+                        </div>
+                        <p class="project-desc">
+                            国风策略对战小游戏，从玩法设计到交互实现全部独立完成。
+                        </p>
+                        <div class="project-path">/bdgame</div>
+                    </a>
+                    <a class="project reveal" data-delay="2" href="codelinez/">
+                        <div class="project-name">驼子游戏 CodeLinez <span class="arrow">→</span></div>
+                        <p class="project-desc">
+                            用代码行玩的解谜小游戏，轻量、上手即玩。
+                        </p>
+                        <div class="project-path">/codelinez</div>
+                    </a>
+                    <a class="project reveal" data-delay="3" href="colorguess/">
+                        <div class="project-name">ColorGuess · 混色三选一 <span class="arrow">→</span></div>
+                        <p class="project-desc">
+                            色彩混色答题游戏，考的不是眼力而是颜色直觉。
+                        </p>
+                        <div class="project-path">/colorguess</div>
+                    </a>
+                    <a class="project reveal" data-delay="4" href="raid/">
+                        <div class="project-name">
+                            Code: 炼炁士大战七宗罪 <span class="arrow">→</span>
+                        </div>
+                        <p class="project-desc">
+                            基于 React 的放置 / 战斗模拟器，数值与技能系统自己搭的。
+                        </p>
+                        <div class="project-path">/raid</div>
+                    </a>
+                </div>
+
+                <h3 style="font-size: 15px; font-weight: 700; margin: 44px 0 16px" class="reveal">
+                    📱 微信小程序
+                </h3>
+                <div class="grid grid-2">
+                    <div class="card mp-card reveal" data-delay="1">
+                        <div class="mp-qr">
+                            <img
+                                src="assets/qr-luogaogao.jpg"
+                                alt="微信扫码打开小程序「落高高」"
+                                width="430"
+                                height="430"
+                                loading="lazy"
+                            />
+                        </div>
+                        <div class="mp-name">落高高</div>
+                        <div class="mp-desc">积木叠高高，一不小心就全塌了</div>
+                        <span class="mp-tag">微信小程序 · 扫码体验</span>
+                        <div class="mp-hint">长按识别 / 微信扫一扫</div>
+                    </div>
+                    <div class="card mp-card reveal" data-delay="2">
+                        <div class="mp-qr">
+                            <img
+                                src="assets/qr-colorguess.jpg"
+                                alt="微信扫码打开小程序「混色三选一」"
+                                width="430"
+                                height="430"
+                                loading="lazy"
+                            />
+                        </div>
+                        <div class="mp-name">混色三选一</div>
+                        <div class="mp-desc">三色叠一叠，选出正确的那个颜色</div>
+                        <span class="mp-tag">微信小程序 · 扫码体验</span>
+                        <div class="mp-hint">长按识别 / 微信扫一扫</div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- ================= 芝麻IT工作室 ================= -->
+        <section id="studio">
+            <div class="wrap">
+                <div class="studio reveal">
+                    <span class="studio-tag">Studio</span>
+                    <div class="studio-name grad">芝麻IT工作室</div>
+                    <p class="studio-desc">
+                        我自己在经营的技术工作室。技术交流、合作，都欢迎来找我。
+                    </p>
+                </div>
+            </div>
+        </section>
+
+        <!-- ================= 联系 ================= -->
+        <section id="contact">
+            <div class="wrap">
+                <div class="contact-card reveal">
+                    <h2>聊聊？</h2>
+                    <p>技术交流、外包合作、或者只是想认识一下，都欢迎。</p>
+                    <div class="contact-actions">
+                        <a class="btn btn-primary" href="mailto:110681032@qq.com">
+                            ✉ 110681032@qq.com
+                        </a>
+                        <a
+                            class="btn btn-ghost"
+                            href="https://github.com/HDNRAY"
+                            target="_blank"
+                            rel="noopener noreferrer"
+                            >GitHub · HDNRAY</a
+                        >
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <footer>
+            <div class="wrap">
+                © <span id="year">2025</span> 张瑞 · 芝麻IT工作室 · 用最朴素的技术，做最顺手的作品
+            </div>
+        </footer>
 
         <script>
-            // Fallback list — shown if the GitHub API fails and nothing is cached.
-            // Keep this in sync with the deployed project directories.
-            const FALLBACK = [
-                { name: 'bdgame', title: '2088 青山镇 斗炁大会' },
-                { name: 'codelinez', title: '坨子游戏 (CodeLinez)' },
-                { name: 'colorguess', title: 'ColorGuess · 混色三选一' },
-                { name: 'raid', title: 'Raid Simulator' },
-            ];
+            // 页脚年份
+            document.getElementById('year').textContent = new Date().getFullYear();
 
-            // Last successful scan, cached so the page still lists every project
-            // when the GitHub API is rate-limited (60 req/h per IP) or offline.
-            const CACHE_KEY = 'hdnray.projects.v1';
-
-            function loadCachedProjects() {
-                try {
-                    const raw = localStorage.getItem(CACHE_KEY);
-                    const list = raw ? JSON.parse(raw) : null;
-                    return Array.isArray(list) && list.length ? list : null;
-                } catch {
-                    return null;
+            // 滚动淡入：不支持 IntersectionObserver 时直接全部显示
+            (function () {
+                var items = document.querySelectorAll('.reveal');
+                function showAll() {
+                    items.forEach(function (el) {
+                        el.classList.add('in');
+                    });
                 }
-            }
-
-            function saveProjects(projects) {
-                try {
-                    localStorage.setItem(CACHE_KEY, JSON.stringify(projects));
-                } catch {
-                    /* private mode / quota — cache is best-effort */
+                if (!('IntersectionObserver' in window)) {
+                    showAll();
+                    return;
                 }
-            }
+                var io = new IntersectionObserver(
+                    function (entries) {
+                        entries.forEach(function (entry) {
+                            if (entry.isIntersecting) {
+                                entry.target.classList.add('in');
+                                io.unobserve(entry.target);
+                            }
+                        });
+                    },
+                    { rootMargin: '0px 0px -8% 0px', threshold: 0.08 }
+                );
+                items.forEach(function (el) {
+                    io.observe(el);
+                });
 
-            const SKIP_DIRS = new Set(['.git', 'node_modules', 'assets', 'static', 'cgi-bin']);
-
-            async function fetchJSON(url) {
-                const res = await fetch(url);
-                if (!res.ok) throw new Error(`HTTP ${res.status}`);
-                return res.json();
-            }
-
-            async function getProjectTitle(dirName) {
-                try {
-                    const res = await fetch(dirName + '/index.html');
-                    if (!res.ok) return null;
-                    const html = await res.text();
-                    const m = html.match(/<title>([^<]*)<\/title>/i);
-                    return m ? m[1].trim() : null;
-                } catch {
-                    return null;
-                }
-            }
-
-            async function discoverProjects() {
-                // Render the cached list first (if any) so the grid is never
-                // empty while the API request is in flight.
-                const cached = loadCachedProjects();
-                if (cached) renderProjects(cached);
-
-                try {
-                    const items = await fetchJSON(
-                        'https://api.github.com/repos/HDNRAY/HDNRAY.github.io/contents/'
-                    );
-                    const dirs = items.filter(
-                        (item) => item.type === 'dir' && !SKIP_DIRS.has(item.name)
-                    );
-
-                    if (dirs.length === 0) throw new Error('no dirs found');
-
-                    // Try to fetch each dir's <title> — done in parallel
-                    const titles = await Promise.all(
-                        dirs.map((d) => getProjectTitle(d.name))
-                    );
-
-                    const projects = dirs.map((d, i) => ({
-                        name: d.name,
-                        title: titles[i] || d.name,
-                    }));
-
-                    renderProjects(projects);
-                    saveProjects(projects);
-                } catch {
-                    // API failed (usually the rate limit) — keep the cached list,
-                    // or fall back to the hardcoded one when we have nothing.
-                    if (!cached) renderProjects(FALLBACK);
-                }
-            }
-
-            function renderProjects(projects) {
-                const grid = document.getElementById('project-grid');
-                grid.innerHTML = projects
-                    .map(
-                        (p) => `
-                    <a class="card" href="${p.name}/">
-                        <span class="card-name">${p.title}</span>
-                        <span class="card-desc">/${p.name}</span>
-                    </a>
-                `
-                    )
-                    .join('');
-            }
-
-            discoverProjects();
+                // 兜底：打印、后台标签页、或 observer 被节流时，
+                // 绝不能因为动画没触发就让整页内容一直不可见。
+                window.addEventListener('beforeprint', showAll);
+                setTimeout(function () {
+                    if (document.hidden) showAll();
+                }, 2500);
+            })();
         </script>
     </body>
 </html>
