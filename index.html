@@ -809,6 +809,22 @@
                 transition: transform 0.28s cubic-bezier(0.22, 1, 0.36, 1), color 0.28s ease;
             }
 
+            /* 最新 demo 独占整行，避免奇数张卡在末尾留空格子 */
+            .project-featured {
+                grid-column: 1 / -1;
+                background: linear-gradient(
+                    115deg,
+                    color-mix(in srgb, var(--accent) 9%, var(--surface)),
+                    color-mix(in srgb, var(--accent-2) 7%, var(--surface)) 55%,
+                    var(--surface)
+                );
+                border-color: color-mix(in srgb, var(--accent) 26%, var(--border));
+            }
+
+            .project-featured .project-name {
+                font-size: 17.5px;
+            }
+
             .project:hover .arrow {
                 transform: translateX(4px);
                 color: var(--accent);
@@ -1463,16 +1479,22 @@
                 <div class="section-head reveal">
                     <div class="section-kicker">Works</div>
                     <h2>个人作品<span class="rule"></span></h2>
-                    <p class="lead" style="margin-top: 14px">
-                        都是自己从头写的：网页小游戏，加上两个微信小程序。
-                    </p>
                 </div>
 
                 <h3 style="font-size: 15px; font-weight: 700; margin: 0 0 16px" class="reveal">
                     🌐 网页作品
                 </h3>
                 <div class="grid grid-2">
-                    <a class="project reveal" data-delay="1" href="bdgame/">
+                    <a class="project project-featured reveal" data-delay="1" href="turn-based-loot/">
+                        <div class="project-name">
+                            时空特工 <span class="arrow">→</span>
+                        </div>
+                        <p class="project-desc">
+                            回合制地牢闯关原型：只按方向键 + 自动开火，程序生成多层地牢与 Boss 房。
+                        </p>
+                        <div class="project-path">/turn-based-loot</div>
+                    </a>
+                    <a class="project reveal" data-delay="2" href="bdgame/">
                         <div class="project-name">
                             2088 青山镇 斗炁大会 <span class="arrow">→</span>
                         </div>
@@ -1481,21 +1503,21 @@
                         </p>
                         <div class="project-path">/bdgame</div>
                     </a>
-                    <a class="project reveal" data-delay="2" href="codelinez/">
+                    <a class="project reveal" data-delay="3" href="codelinez/">
                         <div class="project-name">驼子游戏 CodeLinez <span class="arrow">→</span></div>
                         <p class="project-desc">
                             用代码行玩的解谜小游戏，轻量、上手即玩。
                         </p>
                         <div class="project-path">/codelinez</div>
                     </a>
-                    <a class="project reveal" data-delay="3" href="colorguess/">
+                    <a class="project reveal" data-delay="4" href="colorguess/">
                         <div class="project-name">ColorGuess · 混色三选一 <span class="arrow">→</span></div>
                         <p class="project-desc">
                             色彩混色答题游戏，考的不是眼力而是颜色直觉。
                         </p>
                         <div class="project-path">/colorguess</div>
                     </a>
-                    <a class="project reveal" data-delay="4" href="raid/">
+                    <a class="project reveal" data-delay="5" href="raid/">
                         <div class="project-name">
                             Code: 炼炁士大战七宗罪 <span class="arrow">→</span>
                         </div>
