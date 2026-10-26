@@ -14,6 +14,11 @@
     <link rel="manifest" href="./manifest.webmanifest" />
     <link rel="apple-touch-icon" href="./icons/icon-192.png" />
     <style>
+      /* iOS 加到主屏幕后状态栏/刘海会盖住 canvas 顶部：把安全区交给引擎布局，
+         游戏内仍全部由 framebuffer 绘制，这里只提供一个数值。 */
+      :root {
+        --sat: env(safe-area-inset-top, 0px);
+      }
       html,
       body {
         margin: 0;
@@ -39,9 +44,9 @@
         background: #07070c;
       }
     </style>
-    <script type="module" crossorigin src="./assets/main-CMYcgZLp.js"></script>
-    <link rel="modulepreload" crossorigin href="./assets/effect-CnNVRRuU.js">
-    <link rel="modulepreload" crossorigin href="./assets/render-DTgfL7bV.js">
+    <script type="module" crossorigin src="./assets/main-DbRK3XzV.js"></script>
+    <link rel="modulepreload" crossorigin href="./assets/effect-Dq9JTi6-.js">
+    <link rel="modulepreload" crossorigin href="./assets/actors-BUaI3QfR.js">
   </head>
   <body>
     <canvas id="game"></canvas>
