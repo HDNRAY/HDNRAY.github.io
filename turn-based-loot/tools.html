@@ -156,6 +156,7 @@
         border-top: 2px solid var(--accent);
         border-radius: 10px;
       }
+      .skill-card[hidden] { display: none; }
       .skill-card.flash { background: #1a2740; transition: background 0.3s; }
       .skill-tags { display: flex; flex-wrap: wrap; gap: 3px; }
       .tag-chip {
@@ -180,6 +181,37 @@
       .skill-stats { display: flex; flex-direction: column; gap: 1px; }
       .skill-stat { color: var(--accent); font-size: 10px; line-height: 14px; }
       .skill-stat + .skill-stat { color: var(--dim); }
+      /* 路径引用：一张卡只出现一次，卡片自己列出全部命中路径 */
+      .skill-path-refs { color: #9fb0cc; font-size: 10px; line-height: 13px; margin: 0; }
+      /* 技能页筛选 / 排序面板：单一列表，结果即时过滤 */
+      .skill-filter-panel {
+        display: flex;
+        flex-direction: column;
+        gap: 5px;
+        padding: 10px 12px;
+        background: var(--panel);
+        border: 1px solid var(--line);
+        border-radius: 10px;
+      }
+      .skill-filter-row { display: flex; align-items: flex-start; flex-wrap: wrap; gap: 8px; }
+      .skill-filter-label { color: #aebbd4; font-size: 11px; line-height: 22px; min-width: 64px; }
+      .skill-filter-chips { display: flex; flex-wrap: wrap; gap: 4px; flex: 1; min-width: 0; }
+      .filter-chip { padding: 1px 8px; font-size: 11px; line-height: 18px; border-radius: 6px; }
+      .filter-chip.active { border-color: var(--accent); color: var(--accent); background: #16202e; }
+      .skill-filter-foot { display: flex; align-items: center; flex-wrap: wrap; gap: 8px; }
+      .skill-filter-foot .skill-filter-label { min-width: 0; }
+      .skill-filter-foot select {
+        background: var(--panel);
+        color: var(--text);
+        border: 1px solid var(--line);
+        border-radius: 8px;
+        padding: 3px 8px;
+        font: inherit;
+        font-size: 12px;
+      }
+      .skill-filter-count { color: var(--dim); font-size: 11px; }
+      .skill-filter-reset { font-size: 11px; padding: 2px 10px; }
+      .skill-filter-empty { color: var(--dim); font-size: 12px; padding: 12px 4px; margin: 0; }
       .skill-visuals { display: flex; align-items: flex-start; gap: 8px; }
       .skill-thumb { display: flex; flex-direction: column; gap: 2px; min-width: 0; }
       .thumb-label { color: var(--dim); font-size: 9px; line-height: 11px; }
@@ -261,13 +293,29 @@
       .path-skills button { font-size: 12px; padding: 3px 10px; }
       .range-canvas {
         flex: none;
-        width: 63px;
-        height: 63px;
+        max-width: 99px;
         image-rendering: pixelated;
         border: 1px solid var(--line);
         border-radius: 6px;
         background: #0a0c12;
       }
+      .range-legend {
+        display: flex;
+        flex-direction: column;
+        gap: 1px;
+        font-size: 9px;
+        line-height: 12px;
+        color: var(--dim);
+      }
+      .range-swatch {
+        display: inline-block;
+        width: 8px;
+        height: 8px;
+        margin-right: 4px;
+        border-radius: 2px;
+        vertical-align: -1px;
+      }
+      .range-note { color: #7d879c; }
       .skill-fx {
         flex: none;
         width: 104px;
@@ -294,6 +342,13 @@
       .monster-page { display: flex; flex-direction: column; gap: 26px; }
       .section-title { font-size: 17px; margin: 0 0 4px; }
       .section-note { color: var(--dim); font-size: 12px; margin: 0 0 12px; }
+      /* 武器 / 奇物页：标题 + 计数 + 详情折叠按钮同排，不额外占首屏 */
+      .item-toolbar { display: flex; align-items: center; flex-wrap: wrap; gap: 10px; margin: 0 0 4px; }
+      .item-toolbar .section-title { margin: 0; }
+      .item-toolbar .item-count { color: var(--dim); font-size: 11px; }
+      .item-toolbar .filter-chip { margin-left: auto; padding: 2px 12px; }
+      .item-detail { display: contents; }
+      .details-collapsed .item-detail { display: none; }
       .monster-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(340px, 1fr)); gap: 16px; }
       .monster-card { display: flex; flex-direction: column; }
       .monster-head h2 { margin: 0; font-size: 15px; }
@@ -466,9 +521,9 @@
       .npc-slot-cap { color: var(--dim); font-size: 10px; text-align: center; max-width: 130px; }
       .npc-lineup-row .npc-slot .npc-slot-art { height: 128px; }
     </style>
-    <script type="module" crossorigin src="./assets/tools-BbjCvZur.js"></script>
-    <link rel="modulepreload" crossorigin href="./assets/effect-Dq9JTi6-.js">
-    <link rel="modulepreload" crossorigin href="./assets/actors-BUaI3QfR.js">
+    <script type="module" crossorigin src="./assets/tools-D0sAsWnA.js"></script>
+    <link rel="modulepreload" crossorigin href="./assets/effect-CVPleg5L.js">
+    <link rel="modulepreload" crossorigin href="./assets/actors-Dq19l-wb.js">
   </head>
   <body>
     <header>
