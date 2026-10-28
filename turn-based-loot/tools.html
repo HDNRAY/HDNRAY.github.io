@@ -59,6 +59,11 @@
         overflow: hidden;
       }
       .card canvas:not(.icon) { display: block; width: 100%; height: auto; image-rendering: pixelated; }
+      .map-grid { grid-template-columns: repeat(auto-fill, minmax(400px, 1fr)); }
+      .map-grid .card canvas:not(.icon) { image-rendering: auto; }
+      .map-grid .stat-row { flex-wrap: wrap; }
+      .map-grid .stat-cell { flex: 1 1 88px; min-width: 0; }
+      .stat-label { color: var(--dim); font-size: 10px; }
       .meta, .item-card { padding: 12px 14px 14px; }
       .meta h2, .card > h2 { font-size: 14px; margin: 0 0 4px; font-weight: 600; }
       .item-card { padding: 14px; }
@@ -521,9 +526,9 @@
       .npc-slot-cap { color: var(--dim); font-size: 10px; text-align: center; max-width: 130px; }
       .npc-lineup-row .npc-slot .npc-slot-art { height: 128px; }
     </style>
-    <script type="module" crossorigin src="./assets/tools-6NkOvDYc.js"></script>
+    <script type="module" crossorigin src="./assets/tools-C8XbIACk.js"></script>
     <link rel="modulepreload" crossorigin href="./assets/effect-Daf0ADfx.js">
-    <link rel="modulepreload" crossorigin href="./assets/actors-B1kmu4x9.js">
+    <link rel="modulepreload" crossorigin href="./assets/actors-Csj_tmWJ.js">
   </head>
   <body>
     <header>
