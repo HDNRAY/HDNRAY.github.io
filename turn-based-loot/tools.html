@@ -348,6 +348,31 @@
       }
       .path-card { padding-bottom: 12px; }
       .monster-page { display: flex; flex-direction: column; gap: 26px; }
+      .monster-danger-bar {
+        display: flex;
+        align-items: center;
+        flex-wrap: wrap;
+        gap: 10px;
+        padding: 10px 14px;
+        background: var(--panel);
+        border: 1px solid var(--line);
+        border-radius: 12px;
+      }
+      .monster-danger-label { color: var(--dim); font-size: 12px; }
+      .monster-danger-select {
+        background: #0f1220;
+        color: var(--text);
+        border: 1px solid var(--line);
+        border-radius: 8px;
+        padding: 5px 10px;
+        font: inherit;
+        font-size: 13px;
+        cursor: pointer;
+      }
+      .monster-danger-select:hover,
+      .monster-danger-select:focus { border-color: var(--accent); outline: none; }
+      .monster-danger-hint { color: var(--dim); font-size: 11px; }
+      .monster-body { display: flex; flex-direction: column; gap: 26px; }
       .section-title { font-size: 17px; margin: 0 0 4px; }
       .section-note { color: var(--dim); font-size: 12px; margin: 0 0 12px; }
       /* 武器 / 奇物页：标题 + 计数 + 详情折叠按钮同排，不额外占首屏 */
@@ -392,6 +417,20 @@
         border: 1px solid var(--line);
         border-radius: 6px;
         padding: 2px 7px;
+      }
+      .stat-values { display: flex; align-items: baseline; gap: 4px; white-space: nowrap; }
+      .boost-value { color: #ffd28a; font-weight: 700; }
+      .boost-tag {
+        display: inline-block;
+        vertical-align: middle;
+        color: #ffd28a;
+        background: #241a33;
+        border: 1px solid #5a3780;
+        border-radius: 4px;
+        padding: 0 4px;
+        font-size: 9px;
+        line-height: 1.6;
+        white-space: nowrap;
       }
       .boss-card { background: #1b1426; border-color: #5a3780; }
       .boss-grid { grid-template-columns: repeat(auto-fill, minmax(480px, 1fr)); }
@@ -529,9 +568,9 @@
       .npc-slot-cap { color: var(--dim); font-size: 10px; text-align: center; max-width: 130px; }
       .npc-lineup-row .npc-slot .npc-slot-art { height: 128px; }
     </style>
-    <script type="module" crossorigin src="./assets/tools-DJ5JHPn7.js"></script>
+    <script type="module" crossorigin src="./assets/tools-3AvCRKQm.js"></script>
     <link rel="modulepreload" crossorigin href="./assets/effect-C7bFAvnQ.js">
-    <link rel="modulepreload" crossorigin href="./assets/actors-CJF-EajK.js">
+    <link rel="modulepreload" crossorigin href="./assets/actors-CTaCtmbC.js">
   </head>
   <body>
     <header>
